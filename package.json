@@ -1,0 +1,8 @@
+{
+  "name": "avatar-static",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "formidable": "^3.4.1"
+  }
+}
