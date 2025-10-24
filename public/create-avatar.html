@@ -4,36 +4,12 @@
   <meta charset="UTF-8" />
   <title>Crea Avatar Video</title>
   <style>
-    body {
-      font-family: Helvetica, sans-serif;
-      margin: 40px;
-    }
-    h1 {
-      font-size: 28px;
-    }
-    label {
-      display: block;
-      margin-top: 20px;
-      font-weight: bold;
-    }
-    input, textarea, button {
-      margin-top: 8px;
-      width: 100%;
-      font-size: 16px;
-      padding: 8px;
-    }
-    button {
-      width: auto;
-      background-color: #0070f3;
-      color: white;
-      border: none;
-      cursor: pointer;
-      padding: 10px 20px;
-      border-radius: 5px;
-    }
-    button:hover {
-      background-color: #0059c1;
-    }
+    body { font-family: Helvetica, sans-serif; margin: 40px; }
+    h1 { font-size: 28px; }
+    label { display: block; margin-top: 20px; font-weight: bold; }
+    input, textarea, button { margin-top: 8px; width: 100%; font-size: 16px; padding: 8px; }
+    button { width: auto; background-color: #0070f3; color: white; border: none; cursor: pointer; padding: 10px 20px; border-radius: 5px; }
+    button:hover { background-color: #0059c1; }
   </style>
 </head>
 <body>
@@ -57,8 +33,12 @@
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const formData = new FormData(form);
-      alert("✅ Dati pronti per l’invio all’API HeyGen (prossimo step server).");
-      // Qui verrà aggiunta la chiamata fetch() al backend per HeyGen
+      const res = await fetch('/api/generate', {
+        method: 'POST',
+        body: formData
+      });
+      const { videoId } = await res.json();
+      alert('Video in creazione! ID: ' + videoId);
     });
   </script>
 </body>
