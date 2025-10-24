@@ -14,31 +14,41 @@
 </head>
 <body>
   <h1>Crea il tuo video avatar</h1>
-
   <form id="avatarForm" enctype="multipart/form-data">
     <label for="text">Testo per il video:</label>
     <textarea id="text" name="text" rows="4" placeholder="Scrivi qui il testo che l’avatar deve dire..."></textarea>
-
     <label for="image">Carica immagine dell’avatar:</label>
     <input type="file" id="image" name="image" accept="image/*" required />
-
     <label for="audio">Carica audio (opzionale):</label>
     <input type="file" id="audio" name="audio" accept="audio/*" />
-
     <button type="submit">Genera Video</button>
   </form>
-
+  <div id="status"></div>
   <script>
     const form = document.getElementById('avatarForm');
+    const statusDiv = document.getElementById('status');
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      statusDiv.innerText = 'Invio dati...';
       const formData = new FormData(form);
       const res = await fetch('/api/generate', {
         method: 'POST',
         body: formData
       });
       const { videoId } = await res.json();
-      alert('Video in creazione! ID: ' + videoId);
+      statusDiv.innerText = 'Video in creazione! ID: ' + videoId;
+      async function checkStatus() {
+        const response = await fetch('/api/status?videoId=' + encodeURIComponent(videoId));
+        const data = await response.json();
+        if (data.status && data.status === 'completed') {
+          statusDiv.innerHTML = 'Video pronto! <a href="' + data.video_url + '" target="_blank">Guarda il video</a>';
+        } else if (data.status && data.status === 'failed') {
+          statusDiv.innerText = 'Errore nella generazione del video: ' + (data.error || '');
+        } else {
+          setTimeout(checkStatus, 5000);
+        }
+      }
+      checkStatus();
     });
   </script>
 </body>
