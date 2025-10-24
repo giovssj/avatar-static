@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>Crea Avatar Video</title>
+  <style>
+    body {
+      font-family: Helvetica, sans-serif;
+      margin: 40px;
+    }
+    h1 {
+      font-size: 28px;
+    }
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    input, textarea, button {
+      margin-top: 8px;
+      width: 100%;
+      font-size: 16px;
+      padding: 8px;
+    }
+    button {
+      width: auto;
+      background-color: #0070f3;
+      color: white;
+      border: none;
+      cursor: pointer;
+      padding: 10px 20px;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #0059c1;
+    }
+  </style>
+</head>
+<body>
+  <h1>Crea il tuo video avatar</h1>
+
+  <form id="avatarForm" enctype="multipart/form-data">
+    <label for="text">Testo per il video:</label>
+    <textarea id="text" name="text" rows="4" placeholder="Scrivi qui il testo che l’avatar deve dire..."></textarea>
+
+    <label for="image">Carica immagine dell’avatar:</label>
+    <input type="file" id="image" name="image" accept="image/*" required />
+
+    <label for="audio">Carica audio (opzionale):</label>
+    <input type="file" id="audio" name="audio" accept="audio/*" />
+
+    <button type="submit">Genera Video</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('avatarForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      alert("✅ Dati pronti per l’invio all’API HeyGen (prossimo step server).");
+      // Qui verrà aggiunta la chiamata fetch() al backend per HeyGen
+    });
+  </script>
+</body>
+</html>
